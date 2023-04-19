@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import './App.css';
 
+import {AgeFromDateString} from 'age-calculator';
+
 function App() {
   const [inputs, setInputs] = useState({});
 
@@ -14,6 +16,9 @@ function App() {
     event.preventDefault();
     alert(inputs.username);
   }
+
+  let ageFromString = new AgeFromDateString(inputs.dob).age;
+  let x = ("value from ageFromString", ageFromString);
 
   return (
     <div className="App">
@@ -64,7 +69,7 @@ function App() {
         </div>
         <div className='displaybox'>
           <p className='greet'>Hi! {inputs.username}, Here is your health check results..</p>
-          <h4 className='output'>Your Age: </h4>
+          <h4 className='output'>Your Age: {x}</h4>
           <h4 className='output'>Your BMI: </h4>
           <h4 className='output'>Your Health Status: </h4>
         </div>
