@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import './App.css';
 
-import {AgeFromDateString} from 'age-calculator';
+let {AgeFromDateString} = require('age-calculator');
+var calcBmi = require('bmi-calc')
 
 function App() {
   const [inputs, setInputs] = useState({});
+  const [display, setDisplay] = useState(0);
 
   const handleChange = (event) => {
     const name = event.target.name;
@@ -14,11 +16,13 @@ function App() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    alert(inputs.username);
+    setDisplay(1);
   }
 
   let ageFromString = new AgeFromDateString(inputs.dob).age;
-  let x = ("value from ageFromString", ageFromString);
+  let age = ("value from ageFromString", ageFromString);
+
+  let bmi = calcBmi(inputs.weight, inputs.height);
 
   return (
     <div className="App">
@@ -30,49 +34,61 @@ function App() {
           <form onSubmit={handleSubmit}>
             <label className='lable'>Name:
               <input
+                required
                 type="text"
                 name="username"
                 value={inputs.username || ""}
                 onChange={handleChange}
-                placeholder="Your name.."
+                placeholder="Your name"
               />
             </label>
             <label className='lable'>Date of Birth:
               <input 
+                required
                 type="date" 
                 name="dob" 
                 value={inputs.dob || ""} 
                 onChange={handleChange}
-                placeholder="Your date of birth.."
+                placeholder="Your date of birth"
               />
             </label>
-            <label className='lable'>Height:
+            <label className='lable'>Height (m):
               <input 
+                required
+                min={0}
+                max={3}
+                step="0.01"
                 type="number" 
                 name="height" 
                 value={inputs.height || ""} 
                 onChange={handleChange}
-                placeholder="Your height.."
+                placeholder="Your height in meters"
               />
             </label>
-            <label className='lable'>Weight:
+            <label className='lable'>Weight (kg):
               <input 
+                required
+                min={0}
+                max={300}
+                step="0.01"
                 type="number" 
                 name="weight" 
                 value={inputs.weight || ""} 
                 onChange={handleChange}
-                placeholder="Your weight.."
+                placeholder="Your weight in kilograms"
               />
             </label>
             <input type="submit" value="Check Health Status" />
           </form>
         </div>
-        <div className='displaybox'>
-          <p className='greet'>Hi! {inputs.username}, Here is your health check results..</p>
-          <h4 className='output'>Your Age: {x}</h4>
-          <h4 className='output'>Your BMI: </h4>
-          <h4 className='output'>Your Health Status: </h4>
-        </div>
+        { display==1 &&
+          <div className='displaybox'>
+            <p className='greet'>Hi! {inputs.username}, Here is your health check results..</p>
+            <h4 className='output'>Your Age: {age}</h4>
+            <h4 className='output'>Your BMI: {bmi.value}</h4>
+            <h4 className='output'>Your Health Status: {bmi.name}</h4>
+          </div>
+        }
       </div>
     </div>
   );
