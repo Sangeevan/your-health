@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './App.css';
 
-let {AgeFromDateString} = require('age-calculator');
+let { AgeFromDateString } = require('age-calculator');
 var calcBmi = require('bmi-calc')
 
 function App() {
@@ -43,37 +43,37 @@ function App() {
               />
             </label>
             <label className='lable'>Date of Birth:
-              <input 
+              <input
                 required
-                type="date" 
-                name="dob" 
-                value={inputs.dob || ""} 
+                type="date"
+                name="dob"
+                value={inputs.dob || ""}
                 onChange={handleChange}
                 placeholder="Your date of birth"
               />
             </label>
             <label className='lable'>Height (m):
-              <input 
+              <input
                 required
                 min={0}
                 max={3}
                 step="0.01"
-                type="number" 
-                name="height" 
-                value={inputs.height || ""} 
+                type="number"
+                name="height"
+                value={inputs.height || ""}
                 onChange={handleChange}
                 placeholder="Your height in meters"
               />
             </label>
             <label className='lable'>Weight (kg):
-              <input 
+              <input
                 required
                 min={0}
                 max={300}
                 step="0.01"
-                type="number" 
-                name="weight" 
-                value={inputs.weight || ""} 
+                type="number"
+                name="weight"
+                value={inputs.weight || ""}
                 onChange={handleChange}
                 placeholder="Your weight in kilograms"
               />
@@ -81,11 +81,11 @@ function App() {
             <input type="submit" value="Check Health Status" />
           </form>
         </div>
-        { display==1 &&
+        {display === 1 &&
           <div className='displaybox'>
             <p className='greet'>Hi! {inputs.username}, Here is your health check results..</p>
             <h4 className='output'>Your Age: {age}</h4>
-            <h4 className='output'>Your BMI: {bmi.value}</h4>
+            <h4 className='output'>Your BMI: {Math.round(bmi.value * 10) / 10}</h4>
             <h4 className='output'>Your Health Status: {bmi.name}</h4>
           </div>
         }
